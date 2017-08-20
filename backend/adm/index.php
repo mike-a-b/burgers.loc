@@ -35,7 +35,6 @@ if ($_GET['table'] === 'users')
 <ul class='admin__list-users'>
 <li>ID</li>
 <li>NAME</li>
-<li>LAST_NAME</li>
 <li>EMAIL</li>
 <li>PHONE</li>
 </ul>
@@ -50,7 +49,6 @@ EOU;
         echo "<ul class='admin__list-users'>";
         echo "<li>{$regUser['id']}</li>";
         echo "<li>{$regUser['name']}</li>";
-        echo "<li>{$regUser['last-name']}</li>";
         echo "<li>{$regUser['email']}</li>";
         echo "<li>{$regUser['phone']}</li>";
         echo "</ul>";
