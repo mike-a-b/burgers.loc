@@ -62,7 +62,7 @@ function checkUserEmail(PDO &$dbh, $email)
 //    return false;
 }
 
-function registerUser(PDO &$dbh, array $data) : bool
+function registerUser(PDO &$dbh, array $data)
 {
     $sql = "insert into burgers (email, name,  phone) values :email, :name, :phone";
 

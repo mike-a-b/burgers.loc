@@ -13,7 +13,7 @@ jQuery(document).ready(function ($) {
 
     //ajax request to backend from form
 
-    /*$("#order-form").submit(function (event) {
+    $("#order-form").submit(function (event) {
         event.preventDefault();
         var form = $(this);
         var error = false;
@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
             url: '/backend/form_handler.php',
             dataType: 'json',
             data: data,
-            /!*{
+            /*{
             name:name,
             phone:phone,
             email:email,
@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
             comment:comment,
             payment:payment,
             callback:callback
-        },*!/
+        },*/
             beforeSend: function () {
                 // todo не нужно
                 //        var is_empty = false;
@@ -77,14 +77,14 @@ jQuery(document).ready(function ($) {
                 $('#result').html("");
                 $('input[type="submit"]').prop('disabled', false);
             },
-            /!*                    error: function(xhr, ajaxOption, thrownError){
-                                    console.log('error');
-                                    console.log(JSON.text());
-                                    alert(xhr.responseText)
-                                    alert(xhr.status);
-                                    alert(thrownError);
-                                    $('input[type="submit"]').prop('disabled', false);
-                                },*!/
+            error: function (xhr, ajaxOption, thrownError) {
+                console.log('error');
+                console.log(JSON.text());
+                alert(xhr.responseText)
+                alert(xhr.status);
+                alert(thrownError);
+                $('input[type="submit"]').prop('disabled', false);
+            },
             done: function (data) {
                 alert('done');
                 var response_data = $.parseJSON(data);
@@ -102,5 +102,4 @@ jQuery(document).ready(function ($) {
         // } // error
         // return false;
     });
-*/
 });

@@ -653,7 +653,7 @@ if (isset($_SESSION['id'])) {
 <script src="js/common.js"></script>
 <script type="text/javascript">
     //testing
-    jQuery(document).ready(function ($) {
+ /*   jQuery(document).ready(function ($) {
 
         $('form#order-form').submit('click', function (e) {
             e.preventDefault();
@@ -709,7 +709,7 @@ if (isset($_SESSION['id'])) {
             });//ajax request
         }); //click event
     });//document ready
-
+*/
 </script>
 
 </body>
