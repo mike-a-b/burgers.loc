@@ -1,0 +1,26 @@
+{
+  "name": "burgers.loc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mike-a-b/burgers.git"
+  },
+  "author": "mike-a-b",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mike-a-b/burgers/issues"
+  },
+  "homepage": "https://github.com/mike-a-b/burgers#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglifyjs": "^0.6.2"
+  }
+}

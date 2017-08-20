@@ -1,0 +1,10 @@
+{
+  "name": "burgers.loc",
+  "homepage": "https://github.com/mike-a-b/burgers",
+  "authors": [
+    "Mikhail Bocharov <mike.b.89@mail.ru>"
+  ],
+  "description": "burger-project",
+  "main": "",
+  "license": "MIT"
+}
