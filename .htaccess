@@ -10,7 +10,7 @@ RewriteBase /
 # Rewrite www.domain.com -> domain.com -- used with SEO Strict URLs plugin
 RewriteCond %{HTTP_HOST} .
 RewriteCond %{HTTP_HOST} !^burgers\.loc [NC]
-RewriteRule (.*) http://burgers.ru/$1 [R=301,L]
+RewriteRule (.*) http://burgers.loc/$1 [R=301,L]
 
 # Rewrite index.html to /
 #RewriteRule ^index\.html$ / [R=301,L]

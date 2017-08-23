@@ -1,6 +1,6 @@
 <?php
 define("ROOT", $_SERVER['DOCUMENT_ROOT']);
-$params = require_once(__DIR__.'/backend/config/parameters_db.php');
+$params = require_once(__DIR__ . '/backend/config/parameters_db.php');
 include_once(__DIR__ . "/backend/db_functions.php");
 ////$dbh = getConnection($params);
 session_start();
@@ -543,7 +543,8 @@ if (isset($_SESSION['id'])) {
                                 </div>
                                 <div class="order__form-row">
                                     <input class="order__form-button" name="" type="submit" value="Заказать">
-                                    <input class="order__form-button order__forsubmit_btnm-button_reset" name="" type="reset"
+                                    <input class="order__form-button order__forsubmit_btnm-button_reset" name=""
+                                           type="reset"
                                            value="Очистить">
                                 </div>
                             </div>
@@ -651,65 +652,90 @@ if (isset($_SESSION['id'])) {
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script src="js/main.min.js"></script>
 <script src="js/common.js"></script>
-<script type="text/javascript">
-    //testing
- /*   jQuery(document).ready(function ($) {
+<script type="application/javascript">
+jQuery(document).ready(function ($) {
 
-        $('form#order-form').submit('click', function (e) {
+        /*jQuery.ajax({
+            type: "POST",
+            url: "backend/email_sender.php",
+            data: {"fname": name, "e-mail": email, "pnumber": phone, "message": message, "type": type, "ajax": 1},
+            cache: false,
+            dataType: 'html',
+            beforeSend: function () {
+                a.parent().find(".miniOverlay").fadeIn();
+            },
+            success: function (response) {
+                var response_brought = response;
+                if (response_brought != 1) {
+                    a.each(function () {
+                        this.reset();
+                    });
+
+                    a.find('.input_name').val('');
+                    a.find('.input_email').val('');
+                    a.find('.input_phone1').val('');
+                    jQuery(".popup").fadeOut();
+                    jQuery(".overlay").fadeIn();
+                    jQuery(".thankBox").fadeIn();
+                    setTimeout(' jQuery(".thankBox, .overlay").fadeOut();', 4000);
+                }
+                else {
+                    a.each(function () {
+                        this.reset();
+                    });
+                    a.parent().find(".errorBox, .fileBox i, .miniOverlay").fadeOut();
+
+                }
+            }
+        });*/
+
+// MAIN ajax form send and save to DB
+        $('#order-form').submit('click', function (e) {
             e.preventDefault();
             var form = $(this);
-//не знаю зачем это делать
-            var name = $('input[name="name"]');
-            var email = $('input[name="email"]');
-            var phone = $('input[name="phone"]');
+            form = form.serialize();
+
+            //form vars не знаю зачем нужнно их по отдельности вписывать. todo не нужная часть на мой взгляд
+            var name = $('input[name=name]').val();
+            var phone = $('input[name=phone]').val();
+            var email = $('input[name=email]').val();
+            var street = $('input[name=street]').val();
+            var home = $('input[name=home]').val();
+            var part = $('input[name=part]').val();
+            var appt = $('input[name=appt]').val();
+            var floor = $('input[name=floor]').val();
+            var comment = $('input[name=commet]').val();
+            var payment = $('input[name=payment]').val();
+            var callback = $('input[name=callback]').val();
+
 
             $.ajax({
                 type: 'POST',
                 url: '/backend/form_handler.php',
                 dataType: 'json',
-                data:FormData,//или form.serialize();
-                beforeSend:function(){
-                    // todo не нужно
-                    //        var is_empty = false;
-                    //        $('[required]').each(function (idx, elem) {
-                    //            is_empty = is_empty || ($(elem).val() == '');
-                    //        });
-                    //
-                    //// now do the thing, but only if ALL the values are not empty
-                    //        if (is_empty) {
-                    //            alert("пустые");
-                    //        } else {
-                    //            alert("полные");
-                    //        }
-                    //блочим кнопку отправки
-                    $('input[type="submit"]').attr('disabled', 'disabled');
-                },
-                success: function(data){
-                    JSON.parse(data);
-                    alert("success");
-                    $('.order__form-result').css('display','block');
-                    $('#result').html(data.email);
-                    //разблокируем после завершения запроса кнопку submit
-                    $('input[type="submit"]').prop('disabled', false);
-                },
-                error: function(xhr, ajaxOption, thrownError){
-                    alert(xhr.status);
-                    alert(thrownError);
-                },
-                done:function(data){
-                    var json_data = JSON.parse(data);
-                    //заполняем форму после ajax'a теми же значениями что ввел юзер
-                    alert(data.name);
-                    $('input[name="name"]').val(json_data.name);
-                    $('input[name="email"]').val(json_data.email);
-                    $('input[name="phone"]').val(json_data.phone);
-                    //разблокируем после завершения запроса кнопку submit
-                    $('input[type="submit"]').prop('disabled', false);
-                }
-            });//ajax request
-        }); //click event
-    });//document ready
-*/
+                data: form,
+                success: function (form) {
+                    alert('ok');
+                    console.log('ok..success response data from handler');
+                    var Data = $.parseJSON(form);
+                    $('.order__form-result').css('display', 'block');
+                    $('#result').html("Спасибо! Это уже " + Data.count +  " заказ");
+                    //разблокируем кнопку для пользователя при любом исходе и заполняем поля формы для повторных покупок
+                    $('input[type=submit]').prop('disabled', false);
+                    //todo: отправка письма вложенный ajax
+                },//success
+                error: function (xhr, ajaxOption, thrownError) {
+                    console.log('error');
+//                    console.log(JSON.text());
+                    console.log(xhr.responseText);
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    $('input[type=submit]').prop('disabled', false);
+                }//error
+            }); //ajax
+        })//function body
+});
+
 </script>
 
 </body>

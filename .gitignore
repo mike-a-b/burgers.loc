@@ -6,3 +6,4 @@
 /error.log
 /.bowerrc
 /node_modules/
+/backend/email_sender.php
