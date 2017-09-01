@@ -16,8 +16,11 @@ function getConnection(array $params)
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         print "Ошибка!: " . $e->getMessage() . "<br/>";
+//        file_put_contents('PDOErrors.txt', $e->getMessage(), FILE_APPEND);
+        $handle = fopen('PDOErrors.txt', 'a+');
+        fwrite($handle, $e->getMessage().PHP_EOL);
+        fclose($handle);
         die("Ошибка при подключении к БД или SQL синтаксиса");
-        file_put_contents('PDOErrors.txt', $e > getMessage(), FILE_APPEND);
     }
     $dbh->exec("set names utf8");
     $dbh->exec("use burgers");
@@ -47,15 +50,24 @@ function getAllOrders(PDO &$dbh)
     return $data;
 }
 
+function getCountOrders(PDO &$dbh, $user_id) {
+    $sth = $dbh->prepare("select count(*) from orders where orders.user_id = ?");
+    $sth->setFetchMode(PDO::FETCH_ASSOC);
+    $sth->bindParam(1, $user_id);
+    $res = $sth->execute();
+    $count = (int)$sth->fetchColumn();
+    return $count;
+}
+
 function checkUserEmail(PDO &$dbh, $email)
 {
-    $sth = $dbh->query("select :email, id from users where :email = email");
+    $sql = "select id, email from users where email = :email";
+    $sth = $dbh->prepare($sql);
     $sth->setFetchMode(PDO::FETCH_ASSOC);
-    bindParam(':email', $email, PDO::PARAM_STR);
+    $sth->execute(array(":email" => $email));
     $data = $sth->fetchAll();
-    if (isset($data['email'])) {
-        return $data['id'];
-        //todo Session get user_id and set parameter ?
+    if (isset($data[0]['email'])) {
+        return $data[0]['id'];
     } else {
         return false;
     }
@@ -64,13 +76,21 @@ function checkUserEmail(PDO &$dbh, $email)
 
 function registerUser(PDO &$dbh, array $data)
 {
-    $sql = "insert into burgers (email, name,  phone) values :email, :name, :phone";
-
+    $ar_data = [$data[0], $data[1], $data[2]];
+    $sql = "insert into users (email, name,  phone) values (?, ?, ?)";
     $sth = $dbh->prepare($sql);
-    $sth->execute(array(':email' => $data['email'], ':name' => $data['name'],
-        ':phone' => $data['phone']));
-    if ($user_id = checkUserEmail($dbh, $data['email'])) {
-        return $user_id;
-    }
 
+    $sth->execute($ar_data);/*array(':email' => $data['email'], ':name' => $data['name'],
+        ':phone' => $data['phone'])*/
+    $user_id = checkUserEmail($dbh, $data[0]);
+    return $user_id;
+}
+
+function registerNewOrder(PDO &$dbh, &$data)
+{
+    $ar_data = [$data['user_id'], $data['street'], $data['comment'], $data['payment'], $data['callback']];
+    $sql = "insert into orders (user_id, street, comment, payment, callback) values (?, ?, ?, ?, ?)";
+    $sth = $dbh->prepare($sql);
+    $sth->execute($ar_data);
+    return $dbh->lastInsertId();
 }

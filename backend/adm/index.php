@@ -8,11 +8,9 @@
 
 /* админ панель */
 
-$params = require_once __DIR__. "/../config/parameters_db.php";
+//$params = require_once __DIR__. "/../config/parameters_db.php";
 require_once __DIR__. "/../db_functions.php";
 
-//$dbh = getConnection($params);
-//$reg_users = getAllRegisterUsers($dbh);
 ?>
 <!doctype html>
 <html lang="en">
@@ -64,8 +62,8 @@ EOU;
 <li>USER_ID</li>
 <li>ADDRESS</li>
 <li>COMMENTS</li>
-<li>PAYM_FLAG</li>
-<li>DONT_CALL</li>
+<li>PAYMENT</li>
+<li>CALLBACK</li>
 </ul>
 <hr>
 EOS;
@@ -77,10 +75,10 @@ EOS;
         echo "<ul class='admin__list-orders'>";
         echo "<li>{$order['id']}</li>";
         echo "<li>{$order['user_id']}</li>";
-        echo "<li>{$order['address']}</li>";
-        echo "<li>{$order['comments']}</li>";
-        echo "<li>{$order['payment_flag']}</li>";
-        echo "<li>{$order['dont_call']}</li>";
+        echo "<li>{$order['street']}</li>";
+        echo "<li>{$order['comment']}</li>";
+        echo "<li>{$order['payment']}</li>";
+        echo "<li>{$order['callback']}</li>";
         echo "</ul>";
         echo "<hr>";
     }

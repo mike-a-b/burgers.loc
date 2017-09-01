@@ -7,3 +7,4 @@
 /.bowerrc
 /node_modules/
 /backend/email_sender.php
+/test.php

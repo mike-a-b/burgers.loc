@@ -1,12 +1,13 @@
 <?php
-define("ROOT", $_SERVER['DOCUMENT_ROOT']);
-$params = require_once(__DIR__ . '/backend/config/parameters_db.php');
-include_once(__DIR__ . "/backend/db_functions.php");
-////$dbh = getConnection($params);
+//define("ROOT", $_SERVER['DOCUMENT_ROOT'] ? $_SERVER['DOCUMENT_ROOT'] : false);
 session_start();
+include_once(__DIR__ . "/backend/db_functions.php");
+$data=[];
 $user_reg = null;
 if (isset($_SESSION['id'])) {
     $user_reg = $_SESSION['id'];
+    $data['id'] = $_SESSION['id'];
+    $data['email'] = $_SESSION['email'];
 }
 ?>
 <!DOCTYPE html>
@@ -529,14 +530,14 @@ if (isset($_SESSION['id'])) {
                                         <div class="order__radio-title">Потребуется сдача</div>
                                     </label>
                                     <label class="order__radio">
-                                        <input class="order__radio-elem" name="payment" type="radio" value="card_pay">
+                                        <input class="order__radio-elem" name="payment" type="radio" value="pay_with_card">
                                         <div class="order__radio-fake"></div>
                                         <div class="order__radio-title">Оплата по карте</div>
                                     </label>
                                 </div>
                                 <div class="order__form-row">
                                     <label class="order__radio order__radio_checkbox">
-                                        <input class="order__radio-elem" name="callback" type="checkbox">
+                                            <input class="order__radio-elem" name="callback" type="checkbox" value="1">
                                         <div class="order__radio-fake"></div>
                                         <div class="order__radio-title">Не перезванивать</div>
                                     </label>
@@ -694,38 +695,36 @@ jQuery(document).ready(function ($) {
             e.preventDefault();
             var form = $(this);
             form = form.serialize();
-
-            //form vars не знаю зачем нужнно их по отдельности вписывать. todo не нужная часть на мой взгляд
-            var name = $('input[name=name]').val();
-            var phone = $('input[name=phone]').val();
-            var email = $('input[name=email]').val();
-            var street = $('input[name=street]').val();
-            var home = $('input[name=home]').val();
-            var part = $('input[name=part]').val();
-            var appt = $('input[name=appt]').val();
-            var floor = $('input[name=floor]').val();
-            var comment = $('input[name=commet]').val();
-            var payment = $('input[name=payment]').val();
-            var callback = $('input[name=callback]').val();
-
-
+            $('input[type=submit]').prop('disabled', true);
             $.ajax({
                 type: 'POST',
                 url: '/backend/form_handler.php',
                 dataType: 'json',
                 data: form,
-                success: function (form) {
-                    alert('ok');
+                success: function (data) {
+                    if(data.error) alert(data.error);
                     console.log('ok..success response data from handler');
-                    var Data = $.parseJSON(form);
+                    console.log(data.email);
+//                    var json = $.parseJSON(data);
+//                    var parsed_data = JSON.parse(data);
+//                    alert(data.email);
                     $('.order__form-result').css('display', 'block');
-                    $('#result').html("Спасибо! Это уже " + Data.count +  " заказ");
-                    //разблокируем кнопку для пользователя при любом исходе и заполняем поля формы для повторных покупок
+                    $('#result').html("Спасибо! Это уже " + data.count +  " ваш заказ");
                     $('input[type=submit]').prop('disabled', false);
-                    //todo: отправка письма вложенный ajax
+                    $.ajax({
+                        type: 'POST',
+                        url: '/backend/form_handler.php',
+                        dataType: 'json',
+                        data: form,
+                        success: function (data) {
+
+                        }
+
+                    });
                 },//success
                 error: function (xhr, ajaxOption, thrownError) {
                     console.log('error');
+                    alert("error " + xhr.status + " " + xhr.responseText);
 //                    console.log(JSON.text());
                     console.log(xhr.responseText);
                     console.log(xhr.status);
@@ -733,7 +732,7 @@ jQuery(document).ready(function ($) {
                     $('input[type=submit]').prop('disabled', false);
                 }//error
             }); //ajax
-        })//function body
+        });//function body
 });
 
 </script>

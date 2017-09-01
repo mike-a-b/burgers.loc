@@ -1,1 +1,1 @@
-INSERT INTO burgers.orders (user_id, address, comments, payment_flag, dont_call) VALUES (2, '\\u041b\\u0435\\u043d\\u0438\\u043d\\u0433\\u0440\\u0430\\u0434\\u0441\\u043a\\u0438\\u0439 \\u043f\\u0440-\\u04425', 'До обеда (13:00)', 1, 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (2, '\\u041b\\u0435\\u043d\\u0438\\u043d\\u0433\\u0440\\u0430\\u0434\\u0441\\u043a\\u0438\\u0439 \\u043f\\u0440-\\u04425', 'До обеда (13:00)', 1, 0);
