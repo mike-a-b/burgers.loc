@@ -1,1 +1,14 @@
-INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (2, '\\u041b\\u0435\\u043d\\u0438\\u043d\\u0433\\u0440\\u0430\\u0434\\u0441\\u043a\\u0438\\u0439 \\u043f\\u0440-\\u04425', 'До обеда (13:00)', 1, 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (8, 'liningradskoe highway, 7, 2, 2, 2', 'until 16:00', 'need_cashback', 1);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (8, 'liningradskoe highway, 2, 2, 0, 0', '', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (8, 'liningradskoe highway, 2, 2, 2, 2', '', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (8, 'liningradskoe highway, 1, 1, 1, 1', '', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (7, 'ulica_ulica, 6, 2, 2, 1', 'зАКАЗ IVAN3', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (8, 'leninadsfasdfasdf, 1, 2, 3, 4', '555', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica, 1, 2, 1, 2', 'comment', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica, 1, 0, 0, 0', 'd', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica tverskaya-yamskaya, 10, 2, 2, 2', 'ds', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica tverskaya-yamskaya, 10, 2, 2, 2', 'ds', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica tverskaya-yamskaya, 12, 3, 1, 1', '', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica tverskaya-yamskaya, 12, 3, 1, 1', '', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica tverskaya-yamskaya, 12, 200, 1, 1', '', 'need_cashback', 0);
+INSERT INTO burgers.orders (user_id, street, comment, payment, callback) VALUES (9, 'ulica tverskaya-yamskaya, 12, 200, 1, 1', '', 'need_cashback', 0);

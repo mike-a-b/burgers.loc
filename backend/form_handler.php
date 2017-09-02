@@ -136,21 +136,35 @@ $dbh = getConnection($params);
 //set session vars if valid $data['email'] for authorization or register new user , and insert order
 $data['user_id'] = checkUserEmail($dbh, $data['email']);
 if ($data['user_id']) {
-    $data['order_id'] = registerNewOrder($dbh, $data);
+    $data['orderid'] = registerNewOrder($dbh, $data);
     $data['count'] = getCountOrders($dbh, $data['user_id']);
     $_SESSION['id'] = $data['user_id'];
     $_SESSION['email'] = $data['email'];
     $_SESSION['count'] = $data['count'];
 } else {
     $data['user_id'] = registerUser($dbh, [$data['email'], $data['name'], $data['phone']]);
-    $data['order_id'] = registerNewOrder($dbh, $data);
+    $data['orderid'] = registerNewOrder($dbh, $data);
     $data['count'] = getCountOrders($dbh, $data['user_id']);
     $_SESSION['id'] = $data['user_id'];
     $_SESSION['email'] = $data['email'];
     $_SESSION['count'] = $data['count'];
 }
 closeConnection($dbh);
+//send mail
+$to='example@mail.com';
+$content = 'DarkBeefBurger за 500 рублей, 1 шт'. '<br/>';
+$header = 'Заявка с сайта burgers № '."{$data['orderid']}";
+//mail($to,$header,$content);
+$from = 'username@mail.ru';
+$headers  = "Content-type: text/html; charset=UTF-8 \r\n";
+$headers .= "From: burgers.loc\r\n";
+$headers .= "Mime-Version: 1.0\r\n";
 
+if (mail($to, $header, $content, $headers)) {
+    $data['error'] = true;
+} else {
+    $data['error'] = false;
+}
 $data = json_encode($data);
 //response data and send and set message of buy burgers
 echo $data;

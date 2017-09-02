@@ -690,49 +690,7 @@ jQuery(document).ready(function ($) {
             }
         });*/
 
-// MAIN ajax form send and save to DB
-        $('#order-form').submit('click', function (e) {
-            e.preventDefault();
-            var form = $(this);
-            form = form.serialize();
-            $('input[type=submit]').prop('disabled', true);
-            $.ajax({
-                type: 'POST',
-                url: '/backend/form_handler.php',
-                dataType: 'json',
-                data: form,
-                success: function (data) {
-                    if(data.error) alert(data.error);
-                    console.log('ok..success response data from handler');
-                    console.log(data.email);
-//                    var json = $.parseJSON(data);
-//                    var parsed_data = JSON.parse(data);
-//                    alert(data.email);
-                    $('.order__form-result').css('display', 'block');
-                    $('#result').html("Спасибо! Это уже " + data.count +  " ваш заказ");
-                    $('input[type=submit]').prop('disabled', false);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/backend/form_handler.php',
-                        dataType: 'json',
-                        data: form,
-                        success: function (data) {
 
-                        }
-
-                    });
-                },//success
-                error: function (xhr, ajaxOption, thrownError) {
-                    console.log('error');
-                    alert("error " + xhr.status + " " + xhr.responseText);
-//                    console.log(JSON.text());
-                    console.log(xhr.responseText);
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                    $('input[type=submit]').prop('disabled', false);
-                }//error
-            }); //ajax
-        });//function body
 });
 
 </script>
